@@ -1,140 +1,158 @@
-List<String> dir(Object obj) {
-  switch(obj.runtimeType) {
-    case int:
-      return ['abs', 'isOdd', 'isEven', 'isNaN', 'isNegative'];
-    case bool:
-      return ['toString'];
-    case String:
-      return ['split'];
-    default:
-      throw 'unknown type!';
-  }
+/** 
+
+
+**/
+
+import './utils.dart' as utils;
+
+abstract class Widget {
+  paint();
 }
 
-String bin(int val) {
-  return '0x${val.toRadixString(2)}';
+class Text extends Widget {
+  paint() {}
 }
 
-String reversed(String str) {
-  String s = '';
-
-  for(int i = str.length-1; i >= 0; i--) {
-    s += str[i];
-  }
-
-  return s;
+class Input extends Widget {
+  paint() {}
 }
 
-eq(Object o1, Object o2) => o1==o2;
-
-void printf() {}
-
-request({ required String url, String method='GET', Map<String, String> headers=const {} }) {}
-reduce(List<num> lst, num Function(num accumulator, num currentValue) callbackFn, [num initialValue=0]) {}
-
-class Text {
-  int level = 1;
-  String content = '';
-  String color = '';
-
-  paint() {
-    print('text{$int, $content, $color}');
-  }
-}
-
-void main(List<String> argv) {
-  String username = 'Janie Crawford';
-  var email = 'towzunoca@cepehasaz.bs';
-
-  int statusCode = 200;
-
-  dynamic label;
-
-  print(label);
-
-  label = 0;
-  label = false;
-  label = null;
-  label = .1;
-  label = [];
-  label = 0x555;
-
-  print(username);
-  print(statusCode);
-  print(label.runtimeType);
-  print(label.sign);
-
-  print(dir);
-  print(String.fromCharCodes([65, 66, 67]));
-  print('<${username}, ${email}>');
-
-  var frame = '''
-  <html>
-    <head>
-      <title></title>
-    </head>
-    <body>
-    
-    </body>
-  </html>
-  ''';
-
-  print(frame);
-  print(r'\t\t\n'[0]);
-  print('😅'.codeUnitAt(0));
-  print(''.runtimeType.runtimeType);
-
-  var url = 'https://www.emojiall.com/zh-hans/categories/A';
-  bool devtools = false;
-
-  List<List<double>> points = [
-    [67.2, -90.2], 
-    [-21, 10], 
-    [34, 82]
-  ];
-
-  print(url.split('/'));
-  print(points.asMap());
-  print(List.filled(5, 0));
-
-  Map<String, dynamic> post = {
-    'userId': 1,
-    'id': 1,
-    'title': '',
-    'body': '',
+class Button implements Widget {
+  num x = 0;
+  num y = 0;
+  num borderRadius = 0;
+  Map<String, num> size = {
+    'width':0,
+    'height':0
   };
 
-  post['title'] = 'dart language basic teaches';
+  Button() {}
+  Button.by(this.borderRadius, this.size);
 
-  post.addAll({'created_date': '2000/10/21'});
+  static create(num borderRadius, num width, num height) {
+    var instance = new Button();
 
-  print(post);
-  print(bin(255));
+    instance.borderRadius = borderRadius;
+    instance.size['width'] = width;
+    instance.size['height'] = height;
 
-  var os = 'android';
+    return instance;
+  }
 
-  if(os == 'android') {
+  String toString() {
+    return 'Button { borderRadius:$borderRadius, size:{ width:${size['width']}, height:${size['height']} } }';
+  }
+
+  List<num> get pos {
+    return [x, y];
+  }
+
+  set pos(List<num> pos) {
+    this.x = pos[0];
+    this.y = pos[1];
+  }
+
+  paint() {
+
+  }
+}
+
+class Complex {
+  num real = 0;
+  num imag = 0;
+
+  Complex(this.real, this.imag);
+
+  Complex operator + (Complex other) {
+    return Complex(this.real+other.real, this.imag+other.imag);
+  }
+
+  toString() {
+    return '$real${imag >= 0 ? '+' : ''}${imag}i';
+  }
+}
+
+abstract class Model {
+  save();
+}
+
+class UserModel implements Model {
+  @override
+  noSuchMethod(Invocation invocation) {
     
-  } else if(os == 'ios') {
+  }
+}
 
-  } else {
+enum Color {
+  RED,
+  GREEN,
+  BLUE,
+}
+
+mixin LifeCycleCallback {
+  connectedCallback() {}
+  disconnectedCallback() {}
+  adoptedCallback() {}
+  attributeChangedCallback() {}
+}
+
+class Element with LifeCycleCallback {}
+
+class Math {
+  static double PI = 3.1415926;
+
+}
+
+class Array<T extends num> {
+  List<T> items = [];
+
+  T nth(int index) {
+    return items[index];
+  }
+}
+
+typedef EachCallbackFn<T> = void Function(T value, int index);
+
+each<T>(List<T> lst, EachCallbackFn callback) {
+  for(int i = 0; i < lst.length; i++) {
+    callback(lst[i], i);
+  }
+}
+
+Future<Map<String, dynamic>> fetch() async {
+  await {};
+  return {
+    'statusCode':200,
+    'headers':{
+      'Set-Cookie':'',
+    },
+    'data':[],
+  };
+}
+
+class Axios {
+  Map<String, dynamic> config = {
+    'baseURL':'',
+    'timeout': 0,
+    'headers':{},
+  };
+
+  Axios() {}
+  Axios.create() {
 
   }
 
-  try {
-    print(dir([]));
-  } on String catch(e) {
-    print(e);
+  call() {
 
   }
+}
 
-  print(argv);
-  print(eq([], []));
 
-  request(url:'');
+main() {
+  var request = Axios.create();
 
-  reduce([1, 2, 3], (prev,cur){
-    return 0;
-  });
+  request();
+
+
 
 }
